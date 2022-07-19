@@ -2,7 +2,7 @@ version: "3"
 
 services:
   www:
-    image: ghcr.io/soruly/trace.moe-www:latest
+    image: ghcr.io/leslie-wong-h/trace.moe-www:latest
     restart: unless-stopped
     environment:
       - NEXT_PUBLIC_API_ENDPOINT=${NEXT_PUBLIC_API_ENDPOINT}
@@ -13,7 +13,7 @@ services:
       trace_moe_net:
 
   media:
-    image: ghcr.io/soruly/trace.moe-media:latest
+    image: ghcr.io/leslie-wong-h/trace.moe-media:latest
     restart: unless-stopped
     environment:
       - TRACE_MEDIA_SALT=${TRACE_MEDIA_SALT}
@@ -28,7 +28,7 @@ services:
       trace_moe_net:
 
   api:
-    image: ghcr.io/soruly/trace.moe-api:latest
+    image: ghcr.io/leslie-wong-h/trace.moe-api:latest
     depends_on:
       - redis
       - mariadb
@@ -85,7 +85,7 @@ services:
       trace_moe_net:
 
   liresolr:
-    image: ghcr.io/soruly/liresolr:latest
+    image: ghcr.io/leslie-wong-h/liresolr:latest
     command: solr-precreate cl_0 /opt/solr/server/solr/configsets/liresolr
     restart: unless-stopped
     ports:
@@ -98,7 +98,7 @@ services:
       trace_moe_net:
 
   hasher:
-    image: ghcr.io/soruly/trace.moe-worker-hasher:latest
+    image: ghcr.io/leslie-wong-h/trace.moe-worker-hasher:latest
     restart: unless-stopped
     environment:
       - TRACE_API_URL=http://172.17.0.1:${API_PORT}
@@ -112,7 +112,7 @@ services:
       trace_moe_net:
 
   loader:
-    image: ghcr.io/soruly/trace.moe-worker-loader:latest
+    image: ghcr.io/leslie-wong-h/trace.moe-worker-loader:latest
     restart: unless-stopped
     environment:
       - TRACE_API_URL=http://172.17.0.1:${API_PORT}
@@ -122,7 +122,7 @@ services:
       trace_moe_net:
 
   watcher:
-    image: ghcr.io/soruly/trace.moe-worker-watcher:latest
+    image: ghcr.io/leslie-wong-h/trace.moe-worker-watcher:latest
     restart: unless-stopped
     environment:
       - TRACE_API_URL=http://172.17.0.1:${API_PORT}
