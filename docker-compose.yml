@@ -12,6 +12,7 @@ services:
     networks:
       trace_moe_net:
 
+
   media:
     image: ghcr.io/leslie-wong-h/trace.moe-media:latest
     restart: unless-stopped
@@ -26,6 +27,7 @@ services:
         target: /mnt/
     networks:
       trace_moe_net:
+
 
   api:
     image: ghcr.io/leslie-wong-h/trace.moe-api:latest
@@ -45,7 +47,7 @@ services:
       - REDIS_PORT=6379
       - SERVER_PORT=3000
       - SOLA_SOLR_LIST=http://172.17.0.1:${SOLR_PORT}/solr/
-      - SOLA_SOLR_SIZE=1
+      - SOLA_SOLR_SIZE=4
       - TRACE_MEDIA_URL=${NEXT_PUBLIC_MEDIA_ENDPOINT}
       - TRACE_MEDIA_SALT=${TRACE_MEDIA_SALT}
       - TRACE_API_SECRET=${TRACE_API_SECRET}
@@ -59,6 +61,7 @@ services:
     networks:
       trace_moe_net:
 
+
   adminer:
     image: adminer:latest
     restart: always
@@ -71,6 +74,7 @@ services:
     networks:
       trace_moe_net:
 
+
   mariadb:
     image: mariadb:latest
     restart: unless-stopped
@@ -79,10 +83,12 @@ services:
     networks:
       trace_moe_net:
 
+
   redis:
     image: redis:latest
     networks:
       trace_moe_net:
+
 
   liresolr:
     image: ghcr.io/leslie-wong-h/liresolr:latest
@@ -94,8 +100,11 @@ services:
       - type: bind
         source: ${SOLR_DIR}
         target: /var/solr
+    environment:
+      - SOLR_HEAP=2G
     networks:
       trace_moe_net:
+
 
   hasher:
     image: ghcr.io/leslie-wong-h/trace.moe-worker-hasher:latest
@@ -111,6 +120,7 @@ services:
     networks:
       trace_moe_net:
 
+
   loader:
     image: ghcr.io/leslie-wong-h/trace.moe-worker-loader:latest
     restart: unless-stopped
@@ -120,6 +130,7 @@ services:
       - TRACE_MEDIA_URL=http://172.17.0.1:${MEDIA_PORT}
     networks:
       trace_moe_net:
+
 
   watcher:
     image: ghcr.io/leslie-wong-h/trace.moe-worker-watcher:latest
@@ -135,6 +146,7 @@ services:
         target: /mnt/
     networks:
       trace_moe_net:
+
 
 networks:
   trace_moe_net:

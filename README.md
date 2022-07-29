@@ -122,3 +122,46 @@ trace.moe assumes the folder name is anilist ID. If your data is not related to 
 Do not create the folders in the incoming directory. You should first put video files in folders, then move/copy the folders into the incoming directory.
 
 Once the video files are in incoming directory, the watcher would start uploading the video to trace.moe-media. When it's done, it would delete the video in incoming directory. After Hash worker and Load workers complete the job, you can search the video by image in your www website at WWW_PORT.
+
+5. Multi-Solr-Core Mode
+
+```bash
+sudo rm -rf /home/soruly/mycores
+sudo mkdir -p /home/soruly/mycores
+sudo chown 8983:8983 /home/soruly/mycores
+
+docker run --name solr -d -p 8983:8983 -v /mnt/solr:/var/solr ghcr.io/soruly/liresolr:latest solr-precreate cl_0 /opt/solr/server/solr/configsets/liresolr
+docker stop solr
+docker rm solr
+
+docker run --name solr -d -p 8983:8983 -v /mnt/solr:/var/solr ghcr.io/soruly/liresolr:latest solr-precreate cl_1 /opt/solr/server/solr/configsets/liresolr
+docker stop solr
+docker rm solr
+
+docker run --name solr -d -p 8983:8983 -v /mnt/solr:/var/solr ghcr.io/soruly/liresolr:latest solr-precreate cl_2 /opt/solr/server/solr/configsets/liresolr
+docker stop solr
+docker rm solr
+
+docker run --name solr -d -p 8983:8983 -v /mnt/solr:/var/solr ghcr.io/soruly/liresolr:latest solr-precreate cl_3 /opt/solr/server/solr/configsets/liresolr
+docker stop solr
+docker rm solr
+
+# Then change docker-compose.yml, make SOLA_SOLR_SIZE to 4
+# and add "- SOLR_HEAP=2G" as environment to liresolr.
+# 4 and 2G are just reference and can be other value.
+
+# Then docker-compose up
+
+docker stop tracemoe-hasher-1
+
+# Move files at /home/soruly/trace.moe-media to /home/soruly/trace.moe-incoming
+
+# Restart watcher
+docker restart tracemoe-watcher-1
+
+# After watcher finishing its uploading workload, go to adminer and update the cl table
+UPDATE cl SET status='HASHED'
+
+# Restart loader to rebalance the hash files to multi solr cores
+docker restart tracemoe-loader-1
+```
