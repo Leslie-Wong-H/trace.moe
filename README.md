@@ -130,19 +130,19 @@ sudo rm -rf /home/soruly/mycores
 sudo mkdir -p /home/soruly/mycores
 sudo chown 8983:8983 /home/soruly/mycores
 
-docker run --name solr -d -p 8983:8983 -v /mnt/solr:/var/solr ghcr.io/soruly/liresolr:latest solr-precreate cl_0 /opt/solr/server/solr/configsets/liresolr
+docker run --name solr -d -p 8983:8983 -v /home/soruly/mycores:/var/solr ghcr.io/soruly/liresolr:latest solr-precreate cl_0 /opt/solr/server/solr/configsets/liresolr
 docker stop solr
 docker rm solr
 
-docker run --name solr -d -p 8983:8983 -v /mnt/solr:/var/solr ghcr.io/soruly/liresolr:latest solr-precreate cl_1 /opt/solr/server/solr/configsets/liresolr
+docker run --name solr -d -p 8983:8983 -v /home/soruly/mycores:/var/solr ghcr.io/soruly/liresolr:latest solr-precreate cl_1 /opt/solr/server/solr/configsets/liresolr
 docker stop solr
 docker rm solr
 
-docker run --name solr -d -p 8983:8983 -v /mnt/solr:/var/solr ghcr.io/soruly/liresolr:latest solr-precreate cl_2 /opt/solr/server/solr/configsets/liresolr
+docker run --name solr -d -p 8983:8983 -v /home/soruly/mycores:/var/solr ghcr.io/soruly/liresolr:latest solr-precreate cl_2 /opt/solr/server/solr/configsets/liresolr
 docker stop solr
 docker rm solr
 
-docker run --name solr -d -p 8983:8983 -v /mnt/solr:/var/solr ghcr.io/soruly/liresolr:latest solr-precreate cl_3 /opt/solr/server/solr/configsets/liresolr
+docker run --name solr -d -p 8983:8983 -v /home/soruly/mycores:/var/solr ghcr.io/soruly/liresolr:latest solr-precreate cl_3 /opt/solr/server/solr/configsets/liresolr
 docker stop solr
 docker rm solr
 
