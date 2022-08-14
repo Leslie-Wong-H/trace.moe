@@ -19,6 +19,11 @@ services:
     environment:
       - TRACE_MEDIA_SALT=${TRACE_MEDIA_SALT}
       - TRACE_API_SECRET=${TRACE_API_SECRET}
+      - AWS_BUCKET=${AWS_BUCKET}
+      - AWS_ENDPOINT_URL=${AWS_ENDPOINT_URL}
+      - AWS_REGION=${AWS_REGION}
+      - AWS_ACCESS_KEY=${AWS_ACCESS_KEY}
+      - AWS_SECRET_KEY=${AWS_SECRET_KEY}
     ports:
       - ${MEDIA_PORT}:3000
     volumes:
