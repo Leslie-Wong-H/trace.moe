@@ -77,8 +77,9 @@ MEDIA_PORT=3312
 ADMINER_PORT=3313
 SOLR_PORT=8983
 
-NEXT_PUBLIC_API_ENDPOINT=http://172.17.0.1:3311    # external URL
-NEXT_PUBLIC_MEDIA_ENDPOINT=http://172.17.0.1:3312  # external URL
+NEXT_PUBLIC_API_ENDPOINT=http://172.17.0.1:3311         # external URL
+NEXT_PUBLIC_MEDIA_ENDPOINT=http://172.17.0.1:3312       # external URL
+NEXT_PUBLIC_ANILIST_ENDPOINT=https://graphql.anilist.co # external URL
 
 WATCH_DIR=/home/soruly/trace.moe-incoming/  # suggest using fast drives
 MEDIA_DIR=/home/soruly/trace.moe-media/     # suggest using large drives
