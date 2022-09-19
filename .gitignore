@@ -59,3 +59,7 @@ typings/
 
 # next.js build output
 .next
+
+# milvus specific files 
+volumes/
+milvus.yaml

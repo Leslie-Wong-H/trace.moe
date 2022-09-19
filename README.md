@@ -107,7 +107,7 @@ sudo chown 8983:8983 /home/soruly/mycores
 3. Start the containers
 
 ```bash
-docker-compose up
+docker-compose up -d
 ```
 
 4. Once the cluster is ready, you can adding files to incoming folder
@@ -153,7 +153,7 @@ docker rm solr
 # and add "- SOLR_HEAP=2G" as environment to liresolr.
 # 4 and 2G are just reference and can be other value.
 
-# Then docker-compose up
+# Then docker-compose up -d
 
 docker stop tracemoe-hasher-1
 
@@ -167,4 +167,15 @@ UPDATE cl SET status='HASHED'
 
 # Restart loader to rebalance the hash files to multi solr cores
 docker restart tracemoe-loader-1
+```
+
+6. Milvus-Search Mode
+
+```bash
+cp milvus.yaml.example milvus.yaml
+
+# Then change minio.accessKeyID, minio.secretAccessKey
+# and minio.bucketName in milvus.yaml to your S3 service
+
+# Then docker-compose up -d
 ```
