@@ -175,7 +175,8 @@ docker restart tracemoe-loader-1
 cp milvus.yaml.example milvus.yaml
 
 # Then change minio.accessKeyID, minio.secretAccessKey
-# and minio.bucketName in milvus.yaml to your S3 service
+# and minio.bucketName in milvus.yaml to your S3 service.
+# Note that your S3 service is connected by minio gateway via .env config
 
 # Then docker-compose up -d
 ```
