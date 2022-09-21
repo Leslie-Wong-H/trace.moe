@@ -186,7 +186,7 @@ services:
       - ${DOCKER_VOLUME_DIRECTORY:-.}/volumes/etcd:/etcd
     command: etcd -advertise-client-urls=http://127.0.0.1:2379 -listen-client-urls http://0.0.0.0:2379 --data-dir /etcd
     ports:
-      - "2379:2379"    
+      - "2379:2379"
     networks:
       trace_moe_net:
 
@@ -225,7 +225,7 @@ services:
 
   standalone:
     container_name: milvus-standalone
-    image: milvusdb/milvus:v2.1.1
+    image: milvusdb/milvus:v2.1.2
     restart: unless-stopped
     command: [ "milvus", "run", "standalone" ]
     environment:
