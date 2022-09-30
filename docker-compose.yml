@@ -160,6 +160,49 @@ services:
       trace_moe_net:
 
 
+  mongo-telegram-bot:
+    image: ghcr.io/leslie-wong-h/trace.moe-telegram-bot:latest
+    restart: unless-stopped
+    environment:
+      - MONGODB_ATLAS_URL=${MONGODB_URL}
+      - AWS_BUCKET=${AWS_BUCKET}
+      - AWS_ENDPOINT_URL=${AWS_ENDPOINT_URL}
+      - AWS_REGION=${AWS_REGION}
+      - AWS_ACCESS_KEY=${AWS_ACCESS_KEY}
+      - AWS_SECRET_KEY=${AWS_SECRET_KEY}
+    ports:
+      - ${MONGOBOT_PORT}:3000
+    networks:
+      trace_moe_net:
+
+
+  mongo-express:
+    image: mongo-express:latest
+    restart: always
+    ports:
+      - ${MONGOEXPRESS_PORT}:8081
+    environment:
+      - ME_CONFIG_MONGODB_URL=${MONGODB_URL}
+    networks:
+      trace_moe_net:
+
+
+  mongo:
+    image: mongo:latest
+    restart: unless-stopped
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=${MONGODB_ROOT_PASSWORD}
+    ports:
+      - ${MONGO_PORT}:27017
+    volumes:
+      - type: bind
+        source: ${MONGO_DIR}
+        target: /data/db
+    networks:
+      trace_moe_net:
+
+
   searcher:
     image: ghcr.io/leslie-wong-h/trace.moe-worker-searcher:latest
     restart: unless-stopped
