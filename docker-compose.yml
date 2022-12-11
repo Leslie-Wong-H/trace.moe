@@ -200,6 +200,7 @@ services:
       - type: bind
         source: ${MONGO_DIR}
         target: /data/db
+    command: mongod --setParameter diagnosticDataCollectionEnabled=false
     networks:
       trace_moe_net:
 
