@@ -2,7 +2,7 @@ version: "3.5"
 
 services:
   www:
-    image: ghcr.io/leslie-wong-h/trace.moe-www:latest
+    image: lesliewong007/trace.moe-www:latest
     restart: unless-stopped
     environment:
       - NEXT_PUBLIC_API_ENDPOINT=${NEXT_PUBLIC_API_ENDPOINT}
@@ -15,7 +15,7 @@ services:
 
 
   media:
-    image: ghcr.io/leslie-wong-h/trace.moe-media:latest
+    image: lesliewong007/trace.moe-media:latest
     restart: unless-stopped
     environment:
       - TRACE_MEDIA_SALT=${TRACE_MEDIA_SALT}
@@ -37,7 +37,7 @@ services:
 
 
   api:
-    image: ghcr.io/leslie-wong-h/trace.moe-api:latest
+    image: lesliewong007/trace.moe-api:latest
     depends_on:
       - redis
       - mariadb
@@ -60,6 +60,7 @@ services:
       - TRACE_API_SECRET=${TRACE_API_SECRET}
       - HASH_PATH=/mnt/hash
       - SEARCHER_URL=http://172.17.0.1:${SEARCHER_PORT}
+      - MILVUS_URL=172.17.0.1:${MILVUS_PORT}
     ports:
       - ${API_PORT}:3000
     volumes:
@@ -103,7 +104,7 @@ services:
 
 
   liresolr:
-    image: ghcr.io/leslie-wong-h/liresolr:latest
+    image: lesliewong007/liresolr:latest
     command: solr-precreate cl_0 /opt/solr/server/solr/configsets/liresolr
     restart: unless-stopped
     ports:
@@ -119,7 +120,7 @@ services:
 
 
   hasher:
-    image: ghcr.io/leslie-wong-h/trace.moe-worker-hasher:latest
+    image: lesliewong007/trace.moe-worker-hasher:latest
     restart: unless-stopped
     environment:
       - TRACE_API_URL=http://172.17.0.1:${API_PORT}
@@ -134,7 +135,7 @@ services:
 
 
   loader:
-    image: ghcr.io/leslie-wong-h/trace.moe-worker-loader:latest
+    image: lesliewong007/trace.moe-worker-loader:latest
     restart: unless-stopped
     environment:
       - TRACE_API_URL=http://172.17.0.1:${API_PORT}
@@ -146,7 +147,7 @@ services:
 
 
   watcher:
-    image: ghcr.io/leslie-wong-h/trace.moe-worker-watcher:latest
+    image: lesliewong007/trace.moe-worker-watcher:latest
     restart: unless-stopped
     environment:
       - TRACE_API_URL=http://172.17.0.1:${API_PORT}
@@ -162,7 +163,7 @@ services:
 
 
   mongo-telegram-bot:
-    image: ghcr.io/leslie-wong-h/trace.moe-telegram-bot:latest
+    image: lesliewong007/trace.moe-telegram-bot:latest
     restart: unless-stopped
     environment:
       - MONGODB_ATLAS_URL=${MONGODB_URL}
@@ -190,7 +191,7 @@ services:
 
   mongo:
     image: mongo:latest
-    restart: unless-stopped
+    restart: always
     environment:
       - MONGO_INITDB_ROOT_USERNAME=root
       - MONGO_INITDB_ROOT_PASSWORD=${MONGODB_ROOT_PASSWORD}
@@ -206,7 +207,7 @@ services:
 
 
   searcher:
-    image: ghcr.io/leslie-wong-h/trace.moe-worker-searcher:latest
+    image: lesliewong007/trace.moe-worker-searcher:latest
     restart: unless-stopped
     ports:
       - ${SEARCHER_PORT}:19531
