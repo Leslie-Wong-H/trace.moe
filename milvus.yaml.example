@@ -329,3 +329,9 @@ common:
     tlsMode: 0
 
   mem_purge_ratio: 0.2 # in Linux os, if memory-fragmentation-size >= used-memory * ${mem_purge_ratio}, then do `malloc_trim`
+
+quotaAndLimits:
+  limitWriting:
+    diskProtection:
+      enabled: true
+      diskQuota: 8192
