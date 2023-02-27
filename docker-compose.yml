@@ -172,6 +172,10 @@ services:
       - AWS_REGION=${AWS_REGION}
       - AWS_ACCESS_KEY=${AWS_ACCESS_KEY}
       - AWS_SECRET_KEY=${AWS_SECRET_KEY}
+      - wechatAppId=${wechatAppId}
+      - wechatSecret=${wechatSecret}
+      - douyinAppId=${douyinAppId}
+      - douyinSecret=${douyinSecret}
     ports:
       - ${MONGOBOT_PORT}:3000
     networks:
