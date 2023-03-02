@@ -90,9 +90,9 @@ pulsar:
 rocksmq:
   # please adjust in embedded Milvus: /tmp/milvus/rdb_data
   path: /var/lib/milvus/rdb_data # The path where the message is stored in rocksmq
-  rocksmqPageSize: 2147483648 # 2 GB, 2 * 1024 * 1024 * 1024 bytes, The size of each page of messages in rocksmq
+  rocksmqPageSize: 134217728 # 128 MB, 1 * 128 * 1024 * 1024 bytes, The size of each page of messages in rocksmq
   retentionTimeInMinutes: 60 # 1 hour, 1 * 1 * 60 minutes, The retention time of the message in rocksmq.
-  retentionSizeInMB: 8192 # 8 GB, 8 * 1024 MB, The retention size of the message in rocksmq.
+  retentionSizeInMB: 1024 # 1 GB, 1 * 1024 MB, The retention size of the message in rocksmq.
   compactionInterval: 3600 # 1 hour, trigger rocksdb compaction every hour to remove deleted data
   lrucacheratio:  0.06 # rocksdb cache memory ratio
 
@@ -330,8 +330,9 @@ common:
 
   mem_purge_ratio: 0.2 # in Linux os, if memory-fragmentation-size >= used-memory * ${mem_purge_ratio}, then do `malloc_trim`
 
-quotaAndLimits:
-  limitWriting:
-    diskProtection:
-      enabled: true
-      diskQuota: 8192
+# diskQuota is used to target local minio, not rdb_data
+# quotaAndLimits:
+# limitWriting:
+#    diskProtection:
+#      enabled: true
+#      diskQuota: 8192
