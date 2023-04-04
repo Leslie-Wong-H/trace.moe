@@ -252,33 +252,7 @@ services:
       trace_moe_net:
 
 
-  # minio:
-  #   # Local Minio Server
-  #   container_name: milvus-minio
-  #   image: minio/minio:RELEASE.2022-03-17T06-34-49Z
-  #   environment:
-  #     MINIO_ACCESS_KEY: minioadmin
-  #     MINIO_SECRET_KEY: minioadmin
-  #   volumes:
-  #     - ${DOCKER_VOLUME_DIRECTORY:-.}/volumes/minio:/minio_data
-  #   command: minio server /minio_data
-  #   healthcheck:
-  #     test:
-  #       [
-  #         "CMD",
-  #         "curl",
-  #         "-f",
-  #         "http://localhost:9000/minio/health/live"
-  #       ]
-  #     interval: 30s
-  #     timeout: 20s
-  #     retries: 3
-  #   networks:
-  #     trace_moe_net:
-
-
   minio:
-    # Remote Minio Gateway
     container_name: milvus-minio
     image: minio/minio:RELEASE.2022-03-17T06-34-49Z
     restart: unless-stopped
@@ -288,6 +262,9 @@ services:
       - MINIO_ETCD_ENDPOINTS=http://172.17.0.1:2379
     volumes:
       - ${DOCKER_VOLUME_DIRECTORY:-.}/volumes/minio:/minio_data
+    # Local Minio Server
+    # command: minio server /minio_data --console-address ":9001"
+    # Remote Minio Gateway
     command: minio gateway s3 ${AWS_ENDPOINT_URL} --console-address ":9001"
     ports:
       - "9000:9000"
